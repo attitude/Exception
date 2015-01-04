@@ -142,9 +142,7 @@ class Exception extends \Exception
      */
     public function isSuccess()
     {
-        $code = $this->getCode();
-
-        return $code >= 200 && $code < 300;
+        return $this->getCode() >= 200 && $this->getCode() < 300;
     }
 
     /**
@@ -157,5 +155,33 @@ class Exception extends \Exception
     public function isError()
     {
         return ! $this->isSuccess();
+    }
+
+    /**
+     * Returns boolean client error status
+     *
+     * Used to notify user about it's errors in request.
+     *
+     * @param  void
+     * @return boolean
+     *
+     */
+    public function isRequestError()
+    {
+        return $this->getCode() >= 400 && $this->getCode() < 500;
+    }
+
+    /**
+     * Returns boolean server error status
+     *
+     * Used to notify developers if everything is properly set.
+     *
+     * @param  void
+     * @return boolean
+     *
+     */
+    public function isFatalError()
+    {
+        return $this->getCode() >= 500;
     }
 }
